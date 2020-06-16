@@ -6,6 +6,8 @@ var COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', '
 var EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var WIZARD_NUMBER = 4;
+var ENTER_KEY = 'Enter';
+var ESC_KEY = 'Escape';
 var wizards = [];
 var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var setupBlock = document.querySelector('.setup');
@@ -19,17 +21,9 @@ var setupInputs = document.querySelectorAll('.setup-player input');
 var getRandom = function (mass) {
   return Math.floor(Math.random() * mass.length);
 };
-
-var getCopyMass = function (mass) {
-  var newMass = [];
-  for (var i = 0; i < mass.length; i++) {
-    newMass[i] = mass[i];
-  }
-  return newMass;
-};
 var onSetupWindowEsc = function (evt) {
   evt.preventDefault();
-  if (evt.key === 'Escape') {
+  if (evt.key === ESC_KEY) {
     setupBlock.classList.add('hidden');
   }
 };
@@ -55,24 +49,24 @@ var closeSetupWindow = function () {
 
 /* Формирование списка свойств магов */
 
-var massOne = getCopyMass(USERS_NAMES);
-var massTwo = getCopyMass(USERS_SURNAMES);
-var massThree = getCopyMass(COLORS);
-var massFour = getCopyMass(EYES);
+var USERS_NAMES_COPY = USERS_NAMES.slice();
+var USERS_SURNAMES_COPY = USERS_SURNAMES.slice();
+var COLORS_COPY = COLORS.slice();
+var EYES_COPY = EYES.slice();
 
 for (var i = 0; i < WIZARD_NUMBER; i++) {
   var wizard = {};
-  var b = getRandom(massOne);
-  var c = getRandom(massTwo);
-  wizard.name = massOne[b] + ' ' + massTwo[c];
-  massOne.splice(b, 1);
-  massTwo.splice(c, 1);
-  b = getRandom(massThree);
-  wizard.coatColor = massThree[b];
-  massThree.splice(b, 1);
-  b = getRandom(massFour);
-  wizard.eyesColor = massFour[b];
-  massFour.splice(b, 1);
+  var b = getRandom(USERS_NAMES_COPY);
+  var c = getRandom(USERS_SURNAMES_COPY);
+  wizard.name = USERS_NAMES_COPY[b] + ' ' + USERS_SURNAMES_COPY[c];
+  USERS_NAMES_COPY.splice(b, 1);
+  USERS_SURNAMES_COPY.splice(c, 1);
+  b = getRandom(COLORS_COPY);
+  wizard.coatColor = COLORS_COPY[b];
+  COLORS_COPY.splice(b, 1);
+  b = getRandom(EYES_COPY);
+  wizard.eyesColor = EYES_COPY[b];
+  EYES_COPY.splice(b, 1);
   wizards[i] = wizard;
 }
 
@@ -107,7 +101,7 @@ userAvatar.addEventListener('click', function () {
 });
 
 userAvatar.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+  if (evt.key === ENTER_KEY) {
     openSetupWindow();
   }
 });
@@ -117,7 +111,7 @@ closeButton.addEventListener('click', function () {
 });
 
 closeButton.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+  if (evt.key === ENTER_KEY) {
     closeSetupWindow();
   }
 });
