@@ -12,8 +12,8 @@ var wizards = [];
 var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var setupBlock = document.querySelector('.setup');
 var userAvatar = document.querySelector('.setup-open');
-var closeButton = setupBlock.querySelector('.setup-close');
-var userNameInput = setupBlock.querySelector('.setup-user-name');
+var closeButton = document.querySelector('.setup-close');
+var userNameInput = document.querySelector('.setup-user-name');
 var wizardCoatColor = document.querySelector('.wizard-coat');
 var wizardEyesColor = document.querySelector('.wizard-eyes');
 var fireBallColor = document.querySelector('.setup-fireball-wrap');
@@ -28,21 +28,20 @@ var onSetupWindowEsc = function (evt) {
   }
 };
 var onFocusInputEvent = function () {
-  setupBlock.removeEventListener('keydown', onSetupWindowEsc);
+  document.removeEventListener('keydown', onSetupWindowEsc);
 };
 var outFocusInputEvent = function () {
-  setupBlock.addEventListener('keydown', onSetupWindowEsc);
+  document.addEventListener('keydown', onSetupWindowEsc);
 };
 var openSetupWindow = function () {
   setupBlock.classList.remove('hidden');
-  setupBlock.addEventListener('keydown', onSetupWindowEsc);
+  document.addEventListener('keydown', onSetupWindowEsc);
   userNameInput.addEventListener('focus', onFocusInputEvent);
   userNameInput.addEventListener('blur', outFocusInputEvent);
-
 };
 var closeSetupWindow = function () {
   setupBlock.classList.add('hidden');
-  setupBlock.removeEventListener('keydown', onSetupWindowEsc);
+  document.removeEventListener('keydown', onSetupWindowEsc);
   userNameInput.removeEventListener('focus', onFocusInputEvent);
   userNameInput.removeEventListener('blur', outFocusInputEvent);
 };
