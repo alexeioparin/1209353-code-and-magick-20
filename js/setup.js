@@ -43,6 +43,7 @@ window.setup = (function () {
     onSetupWindowEsc: function (evt) {
       evt.preventDefault();
       if (evt.key === ESC_KEY) {
+        setupBlock.style = 'none';
         setupBlock.classList.add('hidden');
       }
     },
@@ -63,6 +64,7 @@ window.setup = (function () {
       document.removeEventListener('keydown', window.setup.onSetupWindowEsc);
       userNameInput.removeEventListener('focus', window.setup.onFocusInputEvent);
       userNameInput.removeEventListener('blur', window.setup.outFocusInputEvent);
+      setupBlock.style = 'none';
     },
     USERS_NAMES_COPY: USERS_NAMES_COPY,
     USERS_SURNAMES_COPY: USERS_SURNAMES_COPY,
