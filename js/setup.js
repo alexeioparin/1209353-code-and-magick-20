@@ -13,7 +13,7 @@ window.setup = (function () {
   var USERS_SURNAMES_COPY = USERS_SURNAMES.slice();
   var COLORS_COPY = COLORS.slice();
   var EYES_COPY = EYES.slice();
-  var wizards = [];
+
   var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var setupBlock = document.querySelector('.setup');
   var userAvatar = document.querySelector('.setup-open-icon');
@@ -26,6 +26,29 @@ window.setup = (function () {
   var wizardList = document.querySelector('.setup-similar-list');
   var randNumOne;
   var randNumTwo;
+
+  var onSetupWindowEsc = function (evt) {
+    evt.preventDefault();
+    if (evt.key === ESC_KEY) {
+      setupBlock.style = 'none';
+      closeSetupWindow();
+    }
+  };
+
+  var openSetupWindow = function () {
+    setupBlock.classList.remove('hidden');
+    document.addEventListener('keydown', window.setup.onSetupWindowEsc);
+    userNameInput.addEventListener('focus', window.setup.onFocusInputEvent);
+    userNameInput.addEventListener('blur', window.setup.outFocusInputEvent);
+  };
+
+  var closeSetupWindow = function () {
+    setupBlock.classList.add('hidden');
+    document.removeEventListener('keydown', window.setup.onSetupWindowEsc);
+    userNameInput.removeEventListener('focus', window.setup.onFocusInputEvent);
+    userNameInput.removeEventListener('blur', window.setup.outFocusInputEvent);
+    setupBlock.style = 'none';
+  };
 
   return {
     USERS_NAMES: USERS_NAMES,
@@ -40,37 +63,19 @@ window.setup = (function () {
     getRandom: function (mass) {
       return Math.floor(Math.random() * mass.length);
     },
-    onSetupWindowEsc: function (evt) {
-      evt.preventDefault();
-      if (evt.key === ESC_KEY) {
-        setupBlock.style = 'none';
-        setupBlock.classList.add('hidden');
-      }
-    },
+    onSetupWindowEsc: onSetupWindowEsc,
     onFocusInputEvent: function () {
       document.removeEventListener('keydown', window.setup.onSetupWindowEsc);
     },
     outFocusInputEvent: function () {
       document.addEventListener('keydown', window.setup.onSetupWindowEsc);
     },
-    openSetupWindow: function () {
-      setupBlock.classList.remove('hidden');
-      document.addEventListener('keydown', window.setup.onSetupWindowEsc);
-      userNameInput.addEventListener('focus', window.setup.onFocusInputEvent);
-      userNameInput.addEventListener('blur', window.setup.outFocusInputEvent);
-    },
-    closeSetupWindow: function () {
-      setupBlock.classList.add('hidden');
-      document.removeEventListener('keydown', window.setup.onSetupWindowEsc);
-      userNameInput.removeEventListener('focus', window.setup.onFocusInputEvent);
-      userNameInput.removeEventListener('blur', window.setup.outFocusInputEvent);
-      setupBlock.style = 'none';
-    },
+    openSetupWindow: openSetupWindow,
+    closeSetupWindow: closeSetupWindow,
     USERS_NAMES_COPY: USERS_NAMES_COPY,
     USERS_SURNAMES_COPY: USERS_SURNAMES_COPY,
     COLORS_COPY: COLORS_COPY,
     EYES_COPY: EYES_COPY,
-    wizards: wizards,
     template: template,
     userAvatar: userAvatar,
     closeButton: closeButton,
