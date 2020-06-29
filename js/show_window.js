@@ -2,10 +2,6 @@
 
 window.showWindow = (function () {
 
-  /* Отрисовка списка магов */
-
-  window.wizardLoader.wizardList.appendChild(window.wizardLoader.setWizardElement(window.setup.wizards));
-
   /* Показ-скрытие окна настроек */
 
   window.setup.userAvatar.addEventListener('click', function () {
