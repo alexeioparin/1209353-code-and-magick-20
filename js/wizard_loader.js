@@ -4,25 +4,47 @@ window.wizardLoader = (function () {
 
   document.querySelector('.setup-similar').classList.remove('hidden');
 
-  // Формирование свойств мага
 
-  var wizardList = document.querySelector('.setup-similar-list');
-  var getWizardElement = function (userDescription) {
-    var wizardElement = window.setup.template.cloneNode(true);
-    wizardElement.querySelector('.setup-similar-label').textContent = userDescription.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = userDescription.colorCoat;
-    return wizardElement;
+  // Обновление списка магов
+
+  var wizards = [];
+
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === window.setup.coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === window.setup.eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
   };
 
-  // Отрисовка DOM элемента
-
-  var successHandler = function (wizards) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.setup.WIZARD_NUMBER; i++) {
-      fragment.appendChild(getWizardElement(wizards[window.setup.getRandom(wizards)]));
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
     }
-    wizardList.appendChild(fragment);
+  };
 
+  var updateWizards = function () {
+    window.render.renderWizard(wizards.sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
+
+  var successHandler = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   // Отображение окна ошибок
@@ -54,7 +76,7 @@ window.wizardLoader = (function () {
   userForm.addEventListener('submit', submitHandler);
 
   return {
-    wizardList: wizardList,
-    getWizardElement: getWizardElement,
+    successHandler: successHandler,
+    updateWizards: updateWizards,
   };
 })();

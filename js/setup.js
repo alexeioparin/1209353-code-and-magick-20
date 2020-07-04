@@ -19,11 +19,9 @@ window.setup = (function () {
   var userAvatar = document.querySelector('.setup-open-icon');
   var closeButton = document.querySelector('.setup-close');
   var userNameInput = document.querySelector('.setup-user-name');
-  var wizardCoatColor = document.querySelector('.wizard-coat');
-  var wizardEyesColor = document.querySelector('.wizard-eyes');
-  var fireBallColor = document.querySelector('.setup-fireball-wrap');
+  var coatColor = 'rgb(101, 137, 164)';
+  var eyesColor = 'black';
   var setupInputs = document.querySelectorAll('.setup-player input');
-  var wizardList = document.querySelector('.setup-similar-list');
   var randNumOne;
   var randNumTwo;
 
@@ -80,12 +78,10 @@ window.setup = (function () {
     userAvatar: userAvatar,
     closeButton: closeButton,
     userNameInput: userNameInput,
-    wizardCoatColor: wizardCoatColor,
-    wizardEyesColor: wizardEyesColor,
     setupInputs: setupInputs,
     randNumOne: randNumOne,
     randNumTwo: randNumTwo,
-    wizardList: wizardList,
-    fireBallColor: fireBallColor,
+    coatColor: coatColor,
+    eyesColor: eyesColor,
   };
 })();
